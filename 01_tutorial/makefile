@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -Wall
 DEPS = 
-OBJ = hello.c
+OBJ = fahrenheit_for.c
 
 prog.out: $(OBJ)
 	$(CC) $(CFLAGS) -o $@ $^
