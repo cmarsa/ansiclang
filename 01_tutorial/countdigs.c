@@ -26,3 +26,11 @@ int main() {
     
     printf(", white space = %d, other = %d\n", nwhite, nother);
 }
+
+/*
+    `if (c >= '0' && c <= '9')`
+    determines whether the character in c is a digit. If it is, the numeric value of that digit is
+        c - '0'
+    This works only if '0', '1', ..., '9' have consecutive increasing values. Fortunately,
+    this is true for all character sets.
+*/
