@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -Wall
 DEPS = 
-OBJ = countchar.c
+OBJ = countline.c
 
 prog.out: $(OBJ)
 	$(CC) $(CFLAGS) -o $@ $^
