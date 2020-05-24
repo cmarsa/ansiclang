@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -Wall
 DEPS = 
-OBJ = countdigs.c
+OBJ = wordhist.c
 
 prog.out: $(OBJ)
 	$(CC) $(CFLAGS) -o $@ $^
