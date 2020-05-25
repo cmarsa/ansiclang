@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -Wall
 DEPS = 
-OBJ = power.c
+OBJ = longestline.c
 
 prog.out: $(OBJ)
 	$(CC) $(CFLAGS) -o $@ $^
