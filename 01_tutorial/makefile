@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -Wall
 DEPS = 
-OBJ = charhist.c
+OBJ = power.c
 
 prog.out: $(OBJ)
 	$(CC) $(CFLAGS) -o $@ $^
