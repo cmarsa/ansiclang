@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -Wall
 DEPS = 
-OBJ = longestline_extern.c
+OBJ = detab.c
 
 prog.out: $(OBJ)
 	$(CC) $(CFLAGS) -o $@ $^
