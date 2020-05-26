@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -Wall
 DEPS = 
-OBJ = longestline.c
+OBJ = reverseline.c
 
 prog.out: $(OBJ)
 	$(CC) $(CFLAGS) -o $@ $^
