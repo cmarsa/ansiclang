@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -Wall -g
 DEPS = 
-OBJ = substr_squeeze.c
+OBJ = getbits.c
 
 prog.out: $(OBJ)
 	$(CC) $(CFLAGS) -o $@ $^
