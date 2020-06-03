@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -Wall -g
 DEPS = 
-OBJ = countdigs_switch.c
+OBJ = escape_chars.c
 
 prog.out: $(OBJ)
 	$(CC) $(CFLAGS) -o $@ $^
