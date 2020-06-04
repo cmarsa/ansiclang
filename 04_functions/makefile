@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -Wall -g
 DEPS = 
-OBJ = sub_grep.c
+OBJ = naive_atof.c
 
 prog.out: $(OBJ)
 	$(CC) $(CFLAGS) -o $@ $^
