@@ -15,7 +15,7 @@ int main() {
 
 int test_qsort() {
     int array[] = {3, 5, 6, 9, 1, 10, 2, 0, 8, 1};
-    int SIZE = (long) sizeof(array) / sizeof(array[0]);
+    int SIZE = (int) sizeof(array) / sizeof(array[0]);
 
     printf("The initial array is:\n");
     print_array(array, SIZE);
