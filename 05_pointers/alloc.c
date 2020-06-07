@@ -9,7 +9,7 @@ char *alloc(int n) {
     // it fits
     if (allocbuf + ALLOCSIZE - allocp >= n) {
         allocp += n;
-        return alloc - n;
+        return allocp - n;
     }
     // not enough room
     else {
