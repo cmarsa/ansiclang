@@ -44,37 +44,6 @@ int str_len(char *s) {
     p[0] . Of course, it is illegal to refer to objects that are not within the array bounds.
 */
 
-/*
-
-    Tests like
-        // it fits
-        if (allocbuf + ALLOCSIZE - allocp >= n)
-    and 
-        if (p >= allocbuf && p < allocbuf + ALLOCSIZE)
-    show several important facets of pointer arithmetic. First, pointers may be compared under
-    certain circumstances. If p and q point to members of the same array, then relations like == ,
-    != , < , >= , etc., work properly. For example
-        p < q
-    is true if p points to an earlier element of the array than q does. Any pointer can be
-    meaningfully compared for equality or inequality with zero. But the behavior is undefined for
-    arithmetic or comparisons with pointers that do not point to members of the same array.
-    (There is one exception: the address of the first element past the end of an array can be used in
-    pointer arithmetic.)
-
-    Second, we have already observed that a pointer and an integer may be added or subtracted.
-    The construction
-        p + n
-    means the address of the n -th object beyond the one p currently points to. This is true
-    regardless of the kind of object p points to; n is scaled according to the size of the objects p
-    points to, which is determined by the declaration of p . If an int is four bytes, for example, the
-    int will be scaled by four.
-
-    Pointer subtraction is also valid: if p and q point to elements of the same array, and p<q , then
-    q-p+1 is the number of elements from p to q inclusive. This fact can be used to write yet
-    another version of strlen:
-*/
-
-
 /**
  * str_len_2: return length of string s
  */
