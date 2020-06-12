@@ -9,8 +9,9 @@ char *lineptr[MAXLINES];        // pointers to text lines
 // function prototypes
 int readlines(char *lineptr[], int nlines);
 void writelines(char *lineptr[], int nlines);
-void qsort(void *lineptr[], int left, int right, int (*comp)(void*, void*));
-int num_cmp(char *, char *);
+void qsort(void *lineptr[], int left, int right, int (*comp)(void*, void*, int), int reverse);
+int str_cmp(char *s, char *t, int reverse);
+int num_cmp(char *, char *, int reverse);
 double atof(char s[]);
 
 
@@ -20,16 +21,30 @@ double atof(char s[]);
 int main(int argc, char *argv[]) {
     int nlines;
     int numeric = 0;
+    int reverse = 0;
 
-    if (argc > 1 && strcmp(argv[1], "-n") == 0)
+    if (argc > 1 && strcmp(argv[1], "-r") == 0) {
+        reverse = 1;
+        printf("  --reversed sorting\n");
+    }
+
+    if (argc > 1 && strcmp(argv[1], "-n") == 0) {
         numeric = 1;
+        printf("  --numeric type\n");
+        if (argc > 2)
+            if (strcmp(argv[2], "-r") == 0) {
+                reverse = 1;
+                printf("  --reversed sorting\n");
+            }
+    }
+
     /**
      * In the call to qsort , strcmp and numcmp are addresses of functions. Since they are known to
      * be functions, the & is not necessary, in the same way that it is not needed before an array
      * name.
      */
     if ((nlines = readlines(lineptr, MAXLINES)) >= 0) {
-        qsort((void**) lineptr, 0, nlines - 1, (int (*)(void *, void*))(numeric ? num_cmp : strcmp));
+        qsort((void**) lineptr, 0, nlines - 1, (int (*)(void *, void*, int))(numeric ? num_cmp : str_cmp), reverse);
         writelines(lineptr, nlines);
         return 0;
     }
@@ -121,7 +136,7 @@ void writelines(char *lineptr[], int nlines) {
  * qsort: sort v[left] ... v[right] into increasing order
  * 
  */
-void qsort(void *v[], int left, int right, int (*comp)(void *, void*)) {
+void qsort(void *v[], int left, int right, int (*comp)(void *, void*, int), int reverse) {
     /**
      * The fourth parameter of qsort is
      *      int (*comp)(void *, void *)
@@ -140,13 +155,14 @@ void qsort(void *v[], int left, int right, int (*comp)(void *, void*)) {
     swap(v, left, (left + right) / 2);
     last = left;
     for (i = left + 1; i <= right; i++) {
-        if ((*comp)(v[i], v[left]) < 0)
+        if ((*comp)(v[i], v[left], reverse) < 0) {
             swap(v, ++last, i);
+        }
     }
     swap(v, left, last);
 
-    qsort(v, left, last - 1, comp);
-    qsort(v, last + 1, right, comp);
+    qsort(v, left, last - 1, comp, reverse);
+    qsort(v, last + 1, right, comp, reverse);
 }
 
 /**
@@ -164,35 +180,41 @@ void swap(void *v[], int i, int j) {
  * str_cmp: return < 0 if s < t, 0 if s == t, > 0 if s > t
  *          (pointer version)
  */
-int str_cmp(char *s, char *t) {
+int str_cmp(char *s, char *t, int reverse) {
     for ( ; *s == *t; s++, t++)
         if (*s == '\0')
             return 0;
-    return *s - *t;
+    if (!reverse)
+        return *s - *t;
+    else
+        return *t - *s;
 }
 
 /**
  * num_cmp: compare s1 and s2 numerically
  */
-int num_cmp(char *s1, char *s2) {
+int num_cmp(char *s1, char *s2, int reverse) {
     double v1, v2;
+    int reverse_sign = 1;
+    if (reverse)
+        reverse_sign = -1;
 
     v1 = atof(s1);
     v2 = atof(s2);
     if (v1 < v2)
-        return -1;
-    else if (v1  > v2)
-        return 1;
+        return -1 * reverse_sign;
+    else if (v1 > v2)
+        return 1 * reverse_sign;
     else
-        return 0;
+        return 0 * reverse_sign;
 }
 
 double atof(char s[]) {
     double val, power;
     int i, sign;
 
-    for (i = 0; isspace(s[i]); i++)     // skip white space
-        ;
+    for (i = 0; isspace(s[i]) || s[i] == '0'; i++)      // skip white space and
+        ;                                               // trailing zeros
     
     sign = (s[i] == '-') ? -1: 1;
     if (s[i] == '+' || s[i] == '-')

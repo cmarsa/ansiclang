@@ -6,6 +6,6 @@ OBJ = sort2.c
 prog.out: $(OBJ)
 	$(CC) $(CFLAGS) -o $@ $^
 run:
-	./prog.out -n
+	./prog.out -n -r
 clean:
 	rm prog.out
