@@ -5,7 +5,7 @@
  * minprintf: minimal printf with variable argument list
  */
 void minprintf(char *fmt, ...) {
-    va_list = ap;
+    va_list  ap;
     char *p, *sval;
     int ival;
     double dval;
