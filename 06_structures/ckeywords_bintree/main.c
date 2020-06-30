@@ -2,7 +2,10 @@
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
+#include <stdlib.h>
 
+#define NUMBER '0'  // signal that a number was found
+#define BUFSIZE 100
 #define MAXWORD 100
 
 struct tnode {
@@ -17,12 +20,15 @@ struct tnode {
 struct tnode *addtree(struct tnode *, char *);
 void treeprint(struct tnode *);
 int getword(char *, int);
+struct tnode *talloc(void);
+int getch(void);
+void ungetch(int);
 
 
 /**
  * word frequency count
  */
-main() {
+int main() {
     struct tnode *root;
     char word[MAXWORD];
 
@@ -35,8 +41,7 @@ main() {
 }
 
 
-struct tnode *talloc(void);
-char *strdup(char *);
+
 /**
  * addtree: add a node with w, at or below p
  */
@@ -96,4 +101,26 @@ int getword(char *word, int lim) {
     }
     *w = '\0';
     return word[0];
+}
+
+
+/**
+ * talloc: make a tnode
+ */
+struct tnode *talloc(void) {
+    return (struct tnode *) malloc(sizeof(struct tnode));
+}
+
+char buf[BUFSIZE];
+int bufp = 0;
+int getch(void) {
+    return (bufp > 0) ? buf[--bufp]: getchar();
+}
+
+
+void ungetch(int c) {
+    if (bufp >= BUFSIZE)
+        printf("ungetch: too many characters\n");
+    else
+        buf[bufp++] = c;
 }
